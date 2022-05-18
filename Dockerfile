@@ -1,0 +1,1 @@
+FROM neinteractiveliterature/larp_library:latest

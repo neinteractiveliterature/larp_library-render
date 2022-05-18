@@ -1,0 +1,19 @@
+name: Release
+
+on:
+  repository_dispatch:
+    types: [larp-library-release]
+
+jobs:
+  report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Update image tag
+        run: echo FROM neinteractiveliterature/larp_library:${{ github.event.client_payload.tag }} > Dockerfile
+      - name: Commit
+        run: |
+          git config --global user.email "github-actions-bot@neilhosting.net"
+          git config --global user.name "Github Actions automation"
+          git commit -am "Deploy Larp Library ${{ github.event.client_payload.tag }}"
+          git push
